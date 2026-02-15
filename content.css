@@ -1,0 +1,89 @@
+.insta-vid-container {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.insta-vid-controls {
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  width: 80%;
+  margin: 0 auto;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 12px 12px 0 0;
+}
+
+.insta-vid-container video {
+  width: 100%;
+  display: block;
+}
+
+.insta-vid-controls {
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  right: 5%;
+  width: 90%;
+  margin: 0 auto;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 12px 12px 0 0;
+}
+
+.insta-vid-container:hover .insta-vid-controls {
+  opacity: 1;
+}
+
+.insta-vid-playpause {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 8px;
+  min-width: 40px;
+}
+
+.insta-vid-progress {
+  flex: 1;
+  height: 4px;
+  cursor: pointer;
+  accent-color: #e4405f;
+}
+
+.insta-vid-time {
+  color: white;
+  font-size: 12px;
+  min-width: 80px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.insta-vid-speed {
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  padding: 4px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.insta-vid-playpause:hover,
+.insta-vid-speed:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
