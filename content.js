@@ -2,10 +2,10 @@
 const style = document.createElement('style');
 style.textContent = `
   .insta-vid-container { position: relative !important; display: block !important; width: 100% !important; }
-  .insta-vid-controls { position: absolute !important; bottom: 0 !important; left: 10% !important; right: 10% !important; width: 80% !important; margin: 0 auto !important; background: rgba(0, 0, 0, 0.6) !important; padding: 10px !important; display: flex !important; align-items: center !important; gap: 8px !important; opacity: 0 !important; transition: opacity 0.3s ease !important; border-radius: 12px 12px 0 0 !important; z-index: 999999 !important; }
+  .insta-vid-controls { position: absolute !important; bottom: 0 !important; left: 10% !important; right: 10% !important; width: 80% !important; margin: 0 auto !important; background: rgba(0, 0, 0, 0.6) !important; padding: 6px !important; display: flex !important; align-items: center !important; gap: 8px !important; opacity: 0 !important; transition: opacity 0.3s ease !important; border-radius: 12px 12px 0 0 !important; z-index: 999999 !important; }
   .insta-vid-controls:not(.insta-vid-story) { bottom: 0 !important; }
   .insta-vid-controls.insta-vid-story { left: 2.5% !important; right: 2.5% !important; width: 95% !important; bottom: 70px !important; border-radius: 12px!important; }
-  .insta-vid-playpause { background: rgba(255,255,255,0.3) !important; border: none !important; color: white !important; font-size: 16px !important; cursor: pointer !important; padding: 8px 14px !important; border-radius: 6px !important; min-width: 44px !important; }
+  .insta-vid-playpause { background: rgba(255,255,255,0.3) !important; border: none !important; color: white !important; font-size: 12px !important; cursor: pointer !important; padding: 4px 8px !important; border-radius: 6px !important; min-width: 34px !important; }
   .insta-vid-progress { flex: 1 !important; height: 6px !important; cursor: pointer !important; accent-color: #e4405f !important; }
   .insta-vid-time { color: white !important; font-size: 12px !important; min-width: 80px !important; font-family: system-ui !important; }
   .insta-vid-speed { background: rgba(0,0,0,0.7) !important; color: white !important; border: none !important; padding: 6px 8px !important; border-radius: 4px !important; font-size: 12px !important; cursor: pointer !important; }
@@ -69,11 +69,11 @@ function injectControls() {
       right: 10%;
       width: 80%;
       background: rgba(0, 0, 0, 0.6) !important;
-      padding: 10px !important;
+      padding: 6px !important;
       display: flex !important;
       align-items: center !important;
       gap: 12px !important;
-      opacity: 1 !important;
+      opacity: 1!important;
       z-index: 999999 !important;
       box-sizing: border-box !important;
       pointer-events: auto !important;
@@ -89,11 +89,11 @@ function injectControls() {
       background: rgba(255,255,255,0.3) !important;
       border: none !important;
       color: white !important;
-      font-size: 16px !important;
+      font-size: 12px !important;
       cursor: pointer !important;
-      padding: 8px 14px !important;
+      padding: 4px 8px !important;
       border-radius: 6px !important;
-      min-width: 44px !important;
+      min-width: 34px !important;
       font-family: system-ui !important;
     `;
     

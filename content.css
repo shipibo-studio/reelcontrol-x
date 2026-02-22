@@ -34,7 +34,7 @@
   width: 90%;
   margin: 0 auto;
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
-  padding: 10px;
+  padding: 6px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -51,10 +51,10 @@
   background: none;
   border: none;
   color: white;
-  font-size: 16px;
+  font-size: 12px;
   cursor: pointer;
   padding: 4px 8px;
-  min-width: 40px;
+  min-width: 34px;
 }
 
 .insta-vid-progress {
