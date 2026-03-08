@@ -1,24 +1,23 @@
-```
-  ____                  _    ____                   _                    _    __  __
- |  _ \    ___    ___  | |  / ___|   ___    _ __   | |_   _ __    ___   | |   \ \/ /
- | |_) |  / _ \  / _ \ | | | |      / _ \  | '_ \  | __| | '__|  / _ \  | |    \  / 
- |  _ <  |  __/ |  __/ | | | |___  | (_) | | | | | | |_  | |    | (_) | | |    /  \ 
- |_| \_\  \___|  \___| |_|  \____|  \___/  |_| |_|  \__| |_|     \___/  |_|   /_/\_\
-```
+# ReelControl X 
 
-# ReelControl X
+![ReelControl X ](https://i.imgur.com/OVyzb5j.png)
 
-Take full control of Instagram videos with custom HTML5 video controls. ReelControl X adds professional playback controls to all Instagram videos including reels, posts, and stories.
+*v1.1.1*
+
+Take full control of Instagram videos with custom HTML5 video controls.
 
 ## ✨ Features
 
 - **Play/Pause Control** - Click to play or pause any Instagram video
 - **Progress Bar** - Seek to any point in the video with an interactive progress bar
 - **Playback Speed** - Adjust speed from 0.5x to 2x (slow motion to fast forward)
+- **Download Button** - Download current video to your computer
 - **Time Display** - See current time and total duration at a glance
 - **Universal Compatibility** - Works on Instagram feed videos, posts, reels, and stories
 - **Toggle On/Off** - Enable or disable controls anytime from the extension popup
 - **Clean UI** - Sleek, semi-transparent controls that don't interfere with content
+
+![ReelControl X](https://i.imgur.com/uhH5HWD.png)
 
 ## 📥 Installation
 
