@@ -30,4 +30,4 @@ node_modules/
 *.tmp
 .cache/
 
-.DS_Store
+scripts/

@@ -1,14 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "ReelControl X",
+  "name": "ReelControl X - Video Controls for IG",
   "version": "1.1.1",
-  "description": "Professional HTML5 video controls for Instagram reels, posts, and stories. Control playback speed, seek, and pause with ease.",
+  "description": "Professional HTML5 video controls for IG reels, posts, and stories. Control playback speed, seek, and pause with ease.",
   "author": "Shipibo Studio",
   "permissions": ["activeTab", "scripting", "storage"],
   "host_permissions": ["https://www.instagram.com/*"],
   "action": {
     "default_popup": "popup.html",
-    "default_title": "ReelControl X - Instagram Video Controls"
+    "default_title": "ReelControl X - IG Video Controls"
   },
   "content_scripts": [
     {

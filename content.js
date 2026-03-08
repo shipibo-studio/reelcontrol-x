@@ -168,7 +168,7 @@ function injectControls() {
       
       let shortcode = null;
       let videoUrl = null;
-      let downloadName = 'instagram-video.mp4';
+      let downloadName = 'ig-video.mp4';
       
       if (isStory) {
         const userMatch = path.match(/\/stories\/([^\/]+)/);
@@ -215,10 +215,10 @@ function injectControls() {
                   if (item && item.media_type === 2 && item.video_versions) {
                     const best = item.video_versions.reduce((a, b) => a.width > b.width ? a : b);
                     videoUrl = best.url;
-                    downloadName = 'instagram-story-' + (storyId || item.pk) + '.mp4';
+                    downloadName = 'ig-story-' + (storyId || item.pk) + '.mp4';
                   } else if (item && item.image_versions2) {
                     videoUrl = item.image_versions2.candidates[0].url;
-                    downloadName = 'instagram-story-' + (storyId || item.pk) + '.jpg';
+                    downloadName = 'ig-story-' + (storyId || item.pk) + '.jpg';
                   }
                 }
               }
@@ -259,10 +259,10 @@ function injectControls() {
               if (item.video_versions) {
                 const best = item.video_versions.reduce((a, b) => a.width > b.width ? a : b);
                 videoUrl = best.url;
-                downloadName = 'instagram-video-' + shortcode + '.mp4';
+                downloadName = 'ig-video-' + shortcode + '.mp4';
               } else if (item.image_versions2) {
                 videoUrl = item.image_versions2.candidates[0].url;
-                downloadName = 'instagram-photo-' + shortcode + '.jpg';
+                downloadName = 'ig-photo-' + shortcode + '.jpg';
               }
             }
           }
