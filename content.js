@@ -2,13 +2,14 @@
 const style = document.createElement('style');
 style.textContent = `
   .insta-vid-container { position: relative !important; display: block !important; width: 100% !important; }
-  .insta-vid-controls { position: absolute !important; bottom: 0 !important; left: 10% !important; right: 10% !important; width: 80% !important; margin: 0 auto !important; background: rgba(0, 0, 0, 0.6) !important; padding: 6px !important; display: flex !important; align-items: center !important; gap: 8px !important; opacity: 0 !important; transition: opacity 0.3s ease !important; border-radius: 12px 12px 0 0 !important; z-index: 999999 !important; }
+  .insta-vid-controls { position: absolute !important; bottom: 0 !important; left: 10% !important; right: 10% !important; width: 80% !important; margin: 0 auto !important; background: rgba(0, 0, 0, 0.6) !important; padding: 6px !important; display: flex !important; align-items: center !important; gap: 6px !important; opacity: 0 !important; transition: opacity 0.3s ease !important; border-radius: 12px 12px 0 0 !important; z-index: 999999 !important; }
   .insta-vid-controls:not(.insta-vid-story) { bottom: 0 !important; }
   .insta-vid-controls.insta-vid-story { left: 2.5% !important; right: 2.5% !important; width: 95% !important; bottom: 70px !important; border-radius: 12px!important; }
   .insta-vid-playpause { background: rgba(255,255,255,0.3) !important; border: none !important; color: white !important; font-size: 12px !important; cursor: pointer !important; padding: 4px 8px !important; border-radius: 6px !important; min-width: 34px !important; }
   .insta-vid-progress { flex: 1 !important; height: 6px !important; cursor: pointer !important; accent-color: #e4405f !important; }
   .insta-vid-time { color: white !important; font-size: 12px !important; min-width: 80px !important; font-family: system-ui !important; }
   .insta-vid-speed { background: rgba(0,0,0,0.7) !important; color: white !important; border: none !important; padding: 6px 8px !important; border-radius: 4px !important; font-size: 12px !important; cursor: pointer !important; }
+  .insta-vid-download { background: rgba(255,255,255,0.3) !important; border: none !important; color: white !important; font-size: 12px !important; cursor: pointer !important; padding: 4px 8px !important; border-radius: 6px !important; min-width: 34px !important; }
 `;
 (document.head || document.documentElement).appendChild(style);
 
@@ -72,7 +73,7 @@ function injectControls() {
       padding: 6px !important;
       display: flex !important;
       align-items: center !important;
-      gap: 12px !important;
+      gap: 6px !important;
       opacity: 1!important;
       z-index: 999999 !important;
       box-sizing: border-box !important;
@@ -91,9 +92,9 @@ function injectControls() {
       color: white !important;
       font-size: 12px !important;
       cursor: pointer !important;
-      padding: 4px 8px !important;
+      padding: 4px !important;
       border-radius: 6px !important;
-      min-width: 34px !important;
+      min-width: 26px !important;
       font-family: system-ui !important;
     `;
     
@@ -138,11 +139,166 @@ function injectControls() {
       if (speed === 1) option.selected = true;
       speedSelect.appendChild(option);
     });
+
+    const downloadBtn = document.createElement('button');
+    downloadBtn.className = 'insta-vid-download';
+    downloadBtn.innerHTML = '⬇';
+    downloadBtn.title = 'Download video';
+    downloadBtn.style.cssText = `
+      background: rgba(255,255,255,0.3) !important;
+      border: none !important;
+      color: white !important;
+      font-size: 12px !important;
+      cursor: pointer !important;
+      padding: 4px !important;
+      border-radius: 6px !important;
+      min-width: 26px !important;
+      font-family: system-ui !important;
+    `;
+    
+    downloadBtn.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      
+      const getCsrfToken = () => {
+        return document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1] || '';
+      };
+      
+      const isStory = window.location.pathname.includes('/stories/') && !window.location.pathname.includes('/reel');
+      const path = window.location.pathname;
+      
+      let shortcode = null;
+      let videoUrl = null;
+      let downloadName = 'instagram-video.mp4';
+      
+      if (isStory) {
+        const userMatch = path.match(/\/stories\/([^\/]+)/);
+        const storyIdMatch = path.match(/\/stories\/[^\/]+\/(\d+)/);
+        
+        if (userMatch && userMatch[1] !== 'highlights') {
+          const username = userMatch[1];
+          const storyId = storyIdMatch ? storyIdMatch[1] : null;
+          
+          try {
+            const userRes = await fetch('/api/v1/users/web_profile_info/?username=' + username, {
+              headers: { 'x-csrftoken': getCsrfToken(), 'x-ig-app-id': '936619743392459', 'x-requested-with': 'XMLHttpRequest' },
+              credentials: 'include'
+            });
+            const userJson = await userRes.json();
+
+            if (userJson.data && userJson.data.user) {
+              const userId = userJson.data.user.id;
+
+              const reelsRes = await fetch('/api/v1/feed/reels_media/?reel_ids=' + userId, {
+                headers: { 'x-csrftoken': getCsrfToken(), 'x-ig-app-id': '936619743392459', 'x-requested-with': 'XMLHttpRequest' },
+                credentials: 'include'
+              });
+              const reelsJson = await reelsRes.json();
+
+              if (reelsJson.reels && reelsJson.reels[userId]) {
+                const items = reelsJson.reels[userId].items;
+
+                if (items && items.length > 0) {
+                  let item = null;
+                  if (storyId) {
+                    item = items.find(i => i.pk === storyId);
+                    if (!item) {
+                      item = items.find(i => i.pk && i.pk.startsWith(storyId.substring(0, 10)));
+                    }
+                  }
+                  if (!item) {
+                    item = items.find(i => i.media_type === 2);
+                  }
+                  if (!item) {
+                    item = items[0];
+                  }
+
+                  if (item && item.media_type === 2 && item.video_versions) {
+                    const best = item.video_versions.reduce((a, b) => a.width > b.width ? a : b);
+                    videoUrl = best.url;
+                    downloadName = 'instagram-story-' + (storyId || item.pk) + '.mp4';
+                  } else if (item && item.image_versions2) {
+                    videoUrl = item.image_versions2.candidates[0].url;
+                    downloadName = 'instagram-story-' + (storyId || item.pk) + '.jpg';
+                  }
+                }
+              }
+            }
+          } catch (err) {}
+        }
+      } else {
+        const shortcodeMatch = path.match(/\/(p|tv|reel|reels)\/([A-Za-z0-9_-]+)/);
+        if (!shortcodeMatch) {
+          const links = document.querySelectorAll('a[href*="/reel/"], a[href*="/p/"], a[href*="/tv/"]');
+          for (const link of links) {
+            const m = link.href.match(/\/(p|tv|reel|reels)\/([A-Za-z0-9_-]+)/);
+            if (m) { shortcode = m[2]; break; }
+          }
+        } else {
+          shortcode = shortcodeMatch[2];
+        }
+        
+        if (shortcode) {
+          const queryRes = await fetch('/graphql/query/?doc_id=8845758582119845', {
+            method: 'POST',
+            headers: { 'x-csrftoken': getCsrfToken(), 'x-ig-app-id': '936619743392459', 'x-fb-friendly-name': 'PolarisPostActionLoadPostQueryQuery', 'content-type': 'application/x-www-form-urlencoded', 'x-requested-with': 'XMLHttpRequest' },
+            credentials: 'include',
+            body: 'fb_api_caller_class=RelayModern&fb_api_req_friendly_name=PolarisPostActionLoadPostQueryQuery&variables=' + encodeURIComponent(JSON.stringify({ shortcode: shortcode }))
+          });
+          const queryJson = await queryRes.json();
+          
+          if (queryJson.data && queryJson.data.xdt_shortcode_media) {
+            const postId = queryJson.data.xdt_shortcode_media.id;
+            const mediaRes = await fetch('/api/v1/media/' + postId + '/info/', {
+              headers: { 'x-csrftoken': getCsrfToken(), 'x-ig-app-id': '936619743392459', 'x-requested-with': 'XMLHttpRequest' },
+              credentials: 'include'
+            });
+            const mediaJson = await mediaRes.json();
+            
+            if (mediaJson.items && mediaJson.items[0]) {
+              const item = mediaJson.items[0];
+              if (item.video_versions) {
+                const best = item.video_versions.reduce((a, b) => a.width > b.width ? a : b);
+                videoUrl = best.url;
+                downloadName = 'instagram-video-' + shortcode + '.mp4';
+              } else if (item.image_versions2) {
+                videoUrl = item.image_versions2.candidates[0].url;
+                downloadName = 'instagram-photo-' + shortcode + '.jpg';
+              }
+            }
+          }
+        }
+      }
+      
+      if (!videoUrl) {
+        downloadBtn.innerHTML = '✕';
+        setTimeout(() => downloadBtn.innerHTML = '⬇', 2000);
+        return;
+      }
+      
+      try {
+        const videoRes = await fetch(videoUrl);
+        const blob = await videoRes.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = downloadName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        downloadBtn.innerHTML = '✓';
+        setTimeout(() => downloadBtn.innerHTML = '⬇', 2000);
+      } catch (err) {
+        downloadBtn.innerHTML = '✕';
+        setTimeout(() => downloadBtn.innerHTML = '⬇', 2000);
+      }
+    });
     
     controls.appendChild(playPauseBtn);
     controls.appendChild(progressBar);
     controls.appendChild(timeDisplay);
     controls.appendChild(speedSelect);
+    controls.appendChild(downloadBtn);
     
     playPauseBtn.addEventListener('click', (e) => {
       e.stopPropagation();
