@@ -111,8 +111,9 @@
 </head>
 
 <body>
-  <h3>ReelControl X <span style="font-size:10px;color:#888;">v1.1.1</span></h3>
-  <p>Videos (Stories, Reels) on IG will get custom controls. Play/Pause, video track, speed and download video.
+  <h3>ReelControl X <span style="font-size:10px;color:#888;">v1.2.0</span></h3>
+  <p>Videos (Stories, Reels) on IG will get custom controls. Play/Pause, video track, speed, and optional download
+    (disabled by default).
   </p>
   <div class="toggle-container">
     <label class="toggle">
@@ -120,6 +121,13 @@
       <span class="slider"></span>
     </label>
     <span id="toggleLabel">Enabled</span>
+  </div>
+  <div class="toggle-container">
+    <label class="toggle">
+      <input type="checkbox" id="downloadToggle">
+      <span class="slider"></span>
+    </label>
+    <span id="downloadToggleLabel">Download Disabled</span>
   </div>
   <button id="refreshBtn">Refresh Page</button>
   <div id="status"></div>

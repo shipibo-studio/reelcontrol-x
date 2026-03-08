@@ -14,10 +14,19 @@ style.textContent = `
 (document.head || document.documentElement).appendChild(style);
 
 let isEnabled = true;
+let isDownloadEnabled = false;
+
+function updateDownloadButtonsVisibility() {
+  document.querySelectorAll('.insta-vid-download').forEach((button) => {
+    button.style.display = isDownloadEnabled ? '' : 'none';
+  });
+}
 
 if (typeof chrome !== 'undefined' && chrome.storage) {
-  chrome.storage.local.get(['enabled'], (result) => {
+  chrome.storage.local.get(['enabled', 'downloadEnabled'], (result) => {
     isEnabled = result.enabled !== false;
+    isDownloadEnabled = result.downloadEnabled === true;
+    updateDownloadButtonsVisibility();
   });
 
   chrome.storage.onChanged.addListener((changes, area) => {
@@ -28,6 +37,11 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
       } else {
         injectControls();
       }
+    }
+
+    if (changes.downloadEnabled) {
+      isDownloadEnabled = changes.downloadEnabled.newValue === true;
+      updateDownloadButtonsVisibility();
     }
   });
 }
@@ -155,6 +169,7 @@ function injectControls() {
       min-width: 26px !important;
       font-family: system-ui !important;
     `;
+    downloadBtn.style.display = isDownloadEnabled ? '' : 'none';
     
     downloadBtn.addEventListener('click', async (e) => {
       e.stopPropagation();

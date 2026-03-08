@@ -2,7 +2,7 @@
 
 ![ReelControl X ](https://i.imgur.com/OVyzb5j.png)
 
-*v1.1.1*
+*v1.2.0*
 
 Take full control of IG videos with custom HTML5 video controls.
 
@@ -11,7 +11,7 @@ Take full control of IG videos with custom HTML5 video controls.
 - **Play/Pause Control** - Click to play or pause any IG video
 - **Progress Bar** - Seek to any point in the video with an interactive progress bar
 - **Playback Speed** - Adjust speed from 0.5x to 2x (slow motion to fast forward)
-- **Download Button** - Download current video to your computer
+- **Download Button (Optional)** - Download current video to your computer (disabled by default)
 - **Time Display** - See current time and total duration at a glance
 - **Universal Compatibility** - Works on IG feed videos, posts, reels, and stories
 - **Toggle On/Off** - Enable or disable controls anytime from the extension popup
@@ -42,7 +42,7 @@ Take full control of IG videos with custom HTML5 video controls.
    - Drag the **progress bar** to seek to any position
    - Use the **speed selector** to adjust playback speed
    - Monitor **time elapsed/remaining** in the time display
-   - Download current video
+   - Download current video (optional, enable it from the popup toggle)
 
 ## 🛠️ Technical Details
 
